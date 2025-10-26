@@ -6,6 +6,8 @@ Uma calculadora moderna e modular com capacidades avançadas de integração num
 - 🖥️ **Desktop** - Interface gráfica com ttkbootstrap
 - 🌐 **Web App** - Aplicação web com FastAPI e interface responsiva
 
+**🚀 [Clique aqui para ver o Guia de Deploy](DEPLOY.md)** - Hospede gratuitamente e compartilhe apenas um link!
+
 ## Características
 
 ### Calculadora Básica
