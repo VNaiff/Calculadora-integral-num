@@ -2,6 +2,10 @@
 
 Uma calculadora moderna e modular com capacidades avançadas de integração numérica.
 
+**Disponível em duas versões:**
+- 🖥️ **Desktop** - Interface gráfica com ttkbootstrap
+- 🌐 **Web App** - Aplicação web com FastAPI e interface responsiva
+
 ## Características
 
 ### Calculadora Básica
@@ -48,11 +52,44 @@ pip install -r requirements.txt
 
 ## Como Usar
 
-### Iniciar a Aplicação
+### Versão Desktop (GUI)
 
 ```bash
 python main.py
 ```
+
+### Versão Web App 🌐
+
+**Opção 1: Script automático**
+
+Linux/Mac:
+```bash
+./run_webapp.sh
+```
+
+Windows:
+```bash
+run_webapp.bat
+```
+
+**Opção 2: Manual**
+
+```bash
+# Instalar dependências
+pip install -r requirements.txt
+
+# Iniciar servidor
+python run_webapp.py
+```
+
+Depois acesse no navegador: **http://localhost:8000**
+
+A aplicação web oferece:
+- ✨ Interface moderna e responsiva
+- 📊 Gráficos interativos com Plotly
+- 📱 Compatível com dispositivos móveis
+- 🚀 Fácil de compartilhar (basta enviar o link!)
+- 💾 Histórico de cálculos persistente
 
 ### Usar a Calculadora Básica
 
@@ -96,22 +133,35 @@ O projeto foi desenvolvido com arquitetura modular para facilitar extensões fut
 
 ```
 Calculadora-integral-num/
-├── main.py                    # Ponto de entrada da aplicação
-├── requirements.txt           # Dependências do projeto
-├── README.md                  # Documentação
-└── src/
+├── main.py                    # Desktop app entry point
+├── run_webapp.py              # Web app entry point
+├── run_webapp.sh              # Shell script (Linux/Mac)
+├── run_webapp.bat             # Batch script (Windows)
+├── requirements.txt           # Dependencies
+├── README.md                  # Documentation
+├── src/                       # Core application logic
+│   ├── __init__.py
+│   ├── core/                  # Calculator logic
+│   │   ├── __init__.py
+│   │   └── calculator.py
+│   ├── integrators/           # Numerical integration methods
+│   │   ├── __init__.py
+│   │   └── numerical_integrator.py
+│   ├── gui/                   # Desktop GUI (ttkbootstrap)
+│   │   ├── __init__.py
+│   │   └── main_window.py
+│   └── utils/                 # Utilities
+│       └── __init__.py
+└── webapp/                    # Web application
     ├── __init__.py
-    ├── core/                  # Lógica central da calculadora
-    │   ├── __init__.py
-    │   └── calculator.py      # Classe Calculator
-    ├── integrators/           # Métodos de integração numérica
-    │   ├── __init__.py
-    │   └── numerical_integrator.py
-    ├── gui/                   # Interface gráfica
-    │   ├── __init__.py
-    │   └── main_window.py     # Janela principal
-    └── utils/                 # Utilidades e helpers
-        └── __init__.py
+    ├── app.py                 # FastAPI backend
+    ├── static/                # Static files
+    │   ├── css/
+    │   │   └── style.css      # Modern styling
+    │   └── js/
+    │       └── app.js         # Frontend logic
+    └── templates/             # HTML templates
+        └── index.html         # Main page
 ```
 
 ## Adicionar Novas Funcionalidades
@@ -170,11 +220,21 @@ Usa amostragem aleatória para estimar a integral.
 
 ## Tecnologias Utilizadas
 
+### Backend
 - **Python 3.8+**
+- **NumPy** - Computação numérica eficiente
+- **FastAPI** - Framework web moderno e rápido
+- **Uvicorn** - Servidor ASGI de alta performance
+
+### Frontend Desktop
 - **ttkbootstrap** - Interface gráfica moderna
-- **NumPy** - Computação numérica
 - **Matplotlib** - Visualização de gráficos
-- **SymPy** - Manipulação simbólica (futuro)
+
+### Frontend Web
+- **HTML5/CSS3** - Estrutura e estilo responsivo
+- **JavaScript (ES6+)** - Interatividade
+- **Plotly.js** - Gráficos interativos e responsivos
+- **Jinja2** - Template engine
 
 ## Funções Suportadas
 
@@ -224,6 +284,51 @@ Método: Simpson
 Resultado: ≈ 1.7724 (√π)
 ```
 
+## Recursos da Web App
+
+### API RESTful
+A aplicação web expõe uma API completa:
+
+- `POST /api/calculate` - Calcular expressão matemática
+- `POST /api/integrate` - Calcular integral numérica
+- `GET /api/methods` - Listar métodos de integração
+- `GET /api/history` - Obter histórico de cálculos
+- `DELETE /api/history` - Limpar histórico
+- `GET /health` - Status da aplicação
+
+### Documentação Interativa da API
+Acesse `http://localhost:8000/docs` para ver a documentação automática da API (Swagger UI).
+
+### Deploy
+A aplicação web pode ser facilmente deployada em:
+- **Heroku** - Plataforma cloud
+- **Railway** - Deploy simples
+- **DigitalOcean** - App Platform
+- **AWS/GCP/Azure** - Serviços em nuvem
+- **Docker** - Containerização
+
+## Compartilhar com Amigos
+
+### Opção 1: Localmente
+1. Execute `run_webapp.sh` (Linux/Mac) ou `run_webapp.bat` (Windows)
+2. Compartilhe seu IP local: `http://SEU_IP:8000`
+3. Amigos na mesma rede podem acessar!
+
+### Opção 2: Internet (ngrok)
+```bash
+# Instalar ngrok: https://ngrok.com/
+ngrok http 8000
+```
+Compartilhe o URL público gerado (ex: `https://abc123.ngrok.io`)
+
+### Opção 3: Deploy em Cloud
+```bash
+# Exemplo com Railway
+railway login
+railway init
+railway up
+```
+
 ## Contribuindo
 
 Contribuições são bem-vindas! Sinta-se à vontade para:
@@ -231,6 +336,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para:
 - Sugerir novas funcionalidades
 - Adicionar novos métodos de integração
 - Melhorar a documentação
+- Melhorar a interface web
 
 ## Licença
 

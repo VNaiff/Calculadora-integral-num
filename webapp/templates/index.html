@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora com Integração Numérica</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧮 Calculadora com Integração Numérica</h1>
+            <p class="subtitle">Desenvolvido para Paulo - Cálculos e Integração Numérica de Alta Precisão</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'calculator')">Calculadora</button>
+            <button class="tab-button" onclick="openTab(event, 'integration')">Integração Numérica</button>
+        </div>
+
+        <!-- Calculator Tab -->
+        <div id="calculator" class="tab-content active">
+            <div class="calculator-container">
+                <div class="display-container">
+                    <input type="text" id="calc-display" class="display" readonly placeholder="0">
+                </div>
+
+                <div class="button-grid">
+                    <button class="btn btn-function" onclick="appendToDisplay('sin(')">sin</button>
+                    <button class="btn btn-function" onclick="appendToDisplay('cos(')">cos</button>
+                    <button class="btn btn-function" onclick="appendToDisplay('tan(')">tan</button>
+                    <button class="btn btn-operator" onclick="appendToDisplay('/')">/</button>
+                    <button class="btn btn-danger" onclick="clearDisplay()">C</button>
+
+                    <button class="btn btn-function" onclick="appendToDisplay('sqrt(')">√</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('7')">7</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('8')">8</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('9')">9</button>
+                    <button class="btn btn-operator" onclick="appendToDisplay('*')">×</button>
+
+                    <button class="btn btn-function" onclick="appendToDisplay('**')">^</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('4')">4</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('5')">5</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('6')">6</button>
+                    <button class="btn btn-operator" onclick="appendToDisplay('-')">-</button>
+
+                    <button class="btn btn-function" onclick="appendToDisplay('log(')">log</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('1')">1</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('2')">2</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('3')">3</button>
+                    <button class="btn btn-operator" onclick="appendToDisplay('+')">+</button>
+
+                    <button class="btn btn-function" onclick="appendToDisplay('exp(')">exp</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('0')">0</button>
+                    <button class="btn btn-number" onclick="appendToDisplay('.')">.</button>
+                    <button class="btn btn-success" onclick="calculate()" style="grid-column: span 2;">=</button>
+
+                    <button class="btn btn-function" onclick="appendToDisplay('pi')">π</button>
+                    <button class="btn btn-function" onclick="appendToDisplay('e')">e</button>
+                    <button class="btn btn-function" onclick="appendToDisplay('(')">(</button>
+                    <button class="btn btn-function" onclick="appendToDisplay(')')">)</button>
+                    <button class="btn btn-danger" onclick="backspace()">←</button>
+                </div>
+
+                <div class="history-container">
+                    <div class="history-header">
+                        <h3>Histórico</h3>
+                        <button class="btn-clear-history" onclick="clearHistory()">Limpar</button>
+                    </div>
+                    <div id="history" class="history"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Tab -->
+        <div id="integration" class="tab-content">
+            <div class="integration-container">
+                <div class="input-section">
+                    <h2>Configuração da Integral</h2>
+
+                    <div class="form-group">
+                        <label for="function-input">Função f(x):</label>
+                        <input type="text" id="function-input" placeholder="Ex: x**2, sin(x), exp(-x**2)" value="x**2">
+                        <small>Use 'x' como variável. Funções disponíveis: sin, cos, tan, sqrt, log, ln, exp, abs</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lower-bound">Limite inferior (a):</label>
+                            <input type="number" id="lower-bound" step="0.1" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="upper-bound">Limite superior (b):</label>
+                            <input type="number" id="upper-bound" step="0.1" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="method-select">Método de Integração:</label>
+                            <select id="method-select">
+                                <option value="Trapezoidal">Regra do Trapézio</option>
+                                <option value="Simpson" selected>Regra de Simpson 1/3</option>
+                                <option value="Simpson 3/8">Regra de Simpson 3/8</option>
+                                <option value="Romberg">Método de Romberg</option>
+                                <option value="Monte Carlo">Método de Monte Carlo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intervals-input">Número de Intervalos:</label>
+                            <input type="number" id="intervals-input" min="10" step="10" value="1000">
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="btn btn-success btn-large" onclick="calculateIntegral()">
+                            Calcular Integral
+                        </button>
+                        <button class="btn btn-primary btn-large" onclick="plotFunction()">
+                            Plotar Função
+                        </button>
+                    </div>
+                </div>
+
+                <div id="result-section" class="result-section" style="display: none;">
+                    <h2>Resultado</h2>
+                    <div id="result-content" class="result-content"></div>
+                </div>
+
+                <div id="plot-section" class="plot-section">
+                    <div id="plot-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Desenvolvido com FastAPI e ❤️ | Versão 1.0.0</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
