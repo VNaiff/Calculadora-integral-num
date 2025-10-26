@@ -2,11 +2,15 @@
 
 Uma calculadora moderna e modular com capacidades avançadas de integração numérica.
 
-**Disponível em duas versões:**
+**Disponível em três versões:**
+- 💾 **[Executável Windows (.exe)](https://github.com/VNaiff/Calculadora-integral-num/releases)** - Download e use! Sem instalação
 - 🖥️ **Desktop** - Interface gráfica com ttkbootstrap
 - 🌐 **Web App** - Aplicação web com FastAPI e interface responsiva
 
-**🚀 [Clique aqui para ver o Guia de Deploy](DEPLOY.md)** - Hospede gratuitamente e compartilhe apenas um link!
+**Links rápidos:**
+- 📥 **[Download .exe](https://github.com/VNaiff/Calculadora-integral-num/releases)** - Windows standalone
+- 🚀 **[Guia de Deploy Web](DEPLOY.md)** - Hospede gratuitamente
+- 🔨 **[Como criar .exe](BUILD_EXE.md)** - Build local ou automático
 
 ## Características
 
